@@ -1,0 +1,10 @@
+.DS_Store
+.settings
+*.jar
+*.iml
+*.class
+*~
+target/
+classes/
+appengine-generated/
+war/WEB-INF/lib

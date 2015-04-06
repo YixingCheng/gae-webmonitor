@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<servlet>
+		<servlet-name>WebMonitorServlet</servlet-name>
+		<servlet-class>io.github.lorenzosaino.webmonitor.WebMonitorServlet</servlet-class>
+		<init-param>
+			<description>User agent used in polling</description>
+			<param-name>retriever.userAgent</param-name>
+			<param-value>Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36</param-value>
+		</init-param>
+		<init-param>
+			<description>Noitification sender name</description>
+			<param-name>notifier.senderName</param-name>
+			<param-value>GAE Web monitor</param-value>
+		</init-param>
+		<init-param>
+			<description>Noitification sender email address</description>
+			<param-name>notifier.senderEmail</param-name>
+			<param-value>YOUR_EMAIL@ADDRESS.COM</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WebMonitorServlet</servlet-name>
+		<url-pattern>/cron/poller</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/cron/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+</web-app>
