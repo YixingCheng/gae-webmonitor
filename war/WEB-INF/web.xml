@@ -20,7 +20,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<init-param>
 			<description>Noitification sender email address</description>
 			<param-name>notifier.senderEmail</param-name>
-			<param-value>YOUR_EMAIL@ADDRESS.COM</param-value>
+			<param-value>waldenlaker@gmail.com</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
