@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <datastore-indexes autoGenerate="true">
-	<datastore-index kind="User" ancestor="false">
-		<property name="email" direction="asc" />
-	</datastore-index>
-	<datastore-index kind="Object" ancestor="false">
-		<property name="uri" direction="asc" />
-	</datastore-index>
+	
 	<datastore-index kind="Subscription" ancestor="false">
 		<property name="email" direction="desc" />
 		<property name="uri" direction="desc" />

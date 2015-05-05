@@ -43,6 +43,24 @@ public class WebMonitorServlet extends HttpServlet {
 		this.datastore = DataStoreService.getInstance();
 		this.notifier = new NotificationService(senderEmail, senderName);
 		this.retriever = new ObjectRetrievalService(userAgent);
+		log.info("Initialized a new Servlet");
+		
+		datastore.addObject("http://dealsea.com/");
+		datastore.addObject("http://www.dell.com/us/dfh/p/new-arrivals-outlet?~ck=anav");
+		datastore.addObject("http://www.dealmoon.com/");
+		datastore.addUser("waldenlaker1@outlook.com");
+		datastore.addUser("waldenlaker@hotmail.com");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/");
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://www.dealmoon.com/");
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://www.dell.com/us/dfh/p/new-arrivals-outlet?~ck=anav");
+		
+		
+		log.info("Populated some data!");
 	}
 	
 	@Override
