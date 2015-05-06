@@ -3,6 +3,6 @@
    <cron>
     <url>/cron/poller</url>
     <description>Poll server</description>
-    <schedule>every 5 minutes</schedule>
+    <schedule>every 30 minutes</schedule>
   </cron> 
 </cronentries>

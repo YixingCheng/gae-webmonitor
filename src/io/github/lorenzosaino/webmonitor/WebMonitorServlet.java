@@ -36,38 +36,35 @@ public class WebMonitorServlet extends HttpServlet {
 		super.init(config);
 		/* Get all config parameters */
 		String userAgent = config.getInitParameter("retriever.userAgent");
-		String senderName = config.getInitParameter("notifer.senderName");
-		String senderEmail = config.getInitParameter("notifer.senderEmail");
+		String senderName = config.getInitParameter("notifier.senderName");
+		String senderEmail = config.getInitParameter("notifier.senderEmail");
 		
 		/* Instantiate all services required */
 		this.datastore = DataStoreService.getInstance();
-		this.notifier = new NotificationService(senderEmail, senderName);
+		this.notifier = new NotificationService(senderName, senderEmail);
 		this.retriever = new ObjectRetrievalService(userAgent);
-		log.info("Initialized a new Servlet");
 		
 		datastore.addUser("waldenlaker@hotmail.com");
-		datastore.addUser("waldenlaker1@hotmail.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		datastore.addObject("http://dealsea.com/");
-		datastore.addObject("http://www.dealmoon.com/");
-		try {
-		    Thread.sleep(1000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/");
-		datastore.addSubscription("waldenlaker1@hotmail.com", "http://www.dealmoon.com/");
-		try {
-		    Thread.sleep(1000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
+		datastore.addObject("http://dealsea.com/view/bsd.dell.com");
+		datastore.addObject("http://dealsea.com/coupons/");
 		
-		log.info("Populated some data!");
+		try {
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/bsd.dell.com");
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/coupons/");
+		try {
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
 		
 	}
 	
@@ -94,7 +91,8 @@ public class WebMonitorServlet extends HttpServlet {
 			do {
 				try {
 					newInstance = retriever.retrieveObject(uri);
-				} catch (IOException e) {
+					break;
+				} catch (Exception e) {
 					retrievalAttempts++;
 					log.warning("I/O issue while trying to retrieve object " 
 							+ uri +	" at attempt " + (retrievalAttempts) +
@@ -115,10 +113,9 @@ public class WebMonitorServlet extends HttpServlet {
 				 * Just add the object instance without sending any notification
 				 */
 				datastore.addObjectInstance(newInstance);
-				log.info("Created a new WebObject");
 				continue;
 			}
-
+            
 			boolean areObjectsEqual = compareInstances(oldInstance, newInstance);
 
 			if(areObjectsEqual) {

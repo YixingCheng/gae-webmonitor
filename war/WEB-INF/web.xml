@@ -15,7 +15,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<init-param>
 			<description>Noitification sender name</description>
 			<param-name>notifier.senderName</param-name>
-			<param-value>GAE Web monitor</param-value>
+			<param-value>R3000 Dell Coupon Monitor</param-value>
 		</init-param>
 		<init-param>
 			<description>Noitification sender email address</description>

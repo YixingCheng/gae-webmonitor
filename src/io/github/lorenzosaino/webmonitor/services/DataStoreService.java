@@ -5,6 +5,7 @@ import io.github.lorenzosaino.webmonitor.entities.WebObjectInstance;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -30,6 +31,9 @@ public class DataStoreService {
 
 	private DatastoreService datastoreService = null;
 	private static DataStoreService instance = null;
+	
+	private static final Logger log = 
+			Logger.getLogger(DataStoreService.class.getName());
 
 	/**
 	 * Constructor
@@ -217,6 +221,7 @@ public class DataStoreService {
 		Date timestamp = (Date) mostRecentInstance.getProperty("timestamp");
 		int statusCode = ((Long) mostRecentInstance.getProperty("statusCode"))
 				.intValue();
+		log.info("retrieved the most recent object instance from datastore");
 		return new WebObjectInstance(uri, content, contentType, timestamp,
 				statusCode);
 	}
