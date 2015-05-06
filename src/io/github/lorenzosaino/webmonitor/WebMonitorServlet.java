@@ -45,21 +45,21 @@ public class WebMonitorServlet extends HttpServlet {
 		this.retriever = new ObjectRetrievalService(userAgent);
 		
 		datastore.addUser("waldenlaker@hotmail.com");
+		datastore.addUser("r3000.mitbbs@gmail.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
 
-		datastore.addObject("http://dealsea.com/coupons/");
 		datastore.addObject("http://dealsea.com/view/bsd.dell.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/coupons/");
 		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/bsd.dell.com");
+		datastore.addSubscription("r3000.mitbbs@gmail.com", "http://dealsea.com/view/bsd.dell.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {

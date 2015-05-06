@@ -1,6 +1,5 @@
 package io.github.lorenzosaino.webmonitor.services;
 
-import io.github.lorenzosaino.webmonitor.WebMonitorServlet;
 import io.github.lorenzosaino.webmonitor.entities.WebObjectInstance;
 
 import java.io.BufferedReader;
@@ -11,6 +10,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.logging.Logger;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * Object retrieval service
@@ -71,6 +74,7 @@ public class ObjectRetrievalService {
 		timestamp = new Date();
 		content = contentBuilder.toString();
 		log.info("ready to create new Instance");
+		log.info(content);
 		return new WebObjectInstance(uri, content, contentType, 
 				timestamp, statusCode);
 	}
