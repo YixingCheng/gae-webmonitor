@@ -45,22 +45,30 @@ public class WebMonitorServlet extends HttpServlet {
 		this.retriever = new ObjectRetrievalService(userAgent);
 		log.info("Initialized a new Servlet");
 		
-		datastore.addObject("http://dealsea.com/");
-		datastore.addObject("http://www.dell.com/us/dfh/p/new-arrivals-outlet?~ck=anav");
-		datastore.addObject("http://www.dealmoon.com/");
-		datastore.addUser("waldenlaker1@outlook.com");
 		datastore.addUser("waldenlaker@hotmail.com");
+		datastore.addUser("waldenlaker1@hotmail.com");
 		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		datastore.addObject("http://dealsea.com/");
+		datastore.addObject("http://www.dealmoon.com/");
+		try {
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
 		}
 		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/");
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://www.dealmoon.com/");
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://www.dell.com/us/dfh/p/new-arrivals-outlet?~ck=anav");
-		
+		datastore.addSubscription("waldenlaker1@hotmail.com", "http://www.dealmoon.com/");
+		try {
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
 		
 		log.info("Populated some data!");
+		
 	}
 	
 	@Override
@@ -89,7 +97,7 @@ public class WebMonitorServlet extends HttpServlet {
 				} catch (IOException e) {
 					retrievalAttempts++;
 					log.warning("I/O issue while trying to retrieve object " 
-							+ uri +	" at attempt " + (retrievalAttempts+1) +
+							+ uri +	" at attempt " + (retrievalAttempts) +
 							"/" + maxRetrievalAttempts);
 				}
 			} while(retrievalAttempts < maxRetrievalAttempts);
@@ -107,6 +115,7 @@ public class WebMonitorServlet extends HttpServlet {
 				 * Just add the object instance without sending any notification
 				 */
 				datastore.addObjectInstance(newInstance);
+				log.info("Created a new WebObject");
 				continue;
 			}
 

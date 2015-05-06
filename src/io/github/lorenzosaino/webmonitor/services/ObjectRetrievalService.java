@@ -1,5 +1,6 @@
 package io.github.lorenzosaino.webmonitor.services;
 
+import io.github.lorenzosaino.webmonitor.WebMonitorServlet;
 import io.github.lorenzosaino.webmonitor.entities.WebObjectInstance;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Object retrieval service
@@ -16,6 +18,8 @@ import java.util.Date;
 public class ObjectRetrievalService {
 
 	private String userAgent = null;
+	private static final Logger log = 
+			Logger.getLogger(ObjectRetrievalService.class.getName());
 
 	/**
 	 * Constructor
@@ -47,6 +51,7 @@ public class ObjectRetrievalService {
 		connection.setRequestProperty("User-Agent", this.userAgent);
 		connection.setRequestProperty("Connection", "close");
 		connection.setInstanceFollowRedirects(true); // it is already the default
+		log.info("Before get InputStream");
 		InputStream in = connection.getInputStream();
 		contentType = connection.getContentType();
 		statusCode  = connection.getResponseCode();
