@@ -20,7 +20,7 @@ public class ObjectRetrievalService {
 	private String userAgent = null;
 	private static final Logger log = 
 			Logger.getLogger(ObjectRetrievalService.class.getName());
-
+	
 	/**
 	 * Constructor
 	 * 
@@ -46,17 +46,18 @@ public class ObjectRetrievalService {
 		int statusCode = 0;
 		Date timestamp = null;
 		
+		
 		HttpURLConnection connection = 
 				(HttpURLConnection) new URL(uri).openConnection();
 		connection.setRequestProperty("User-Agent", this.userAgent);
 		connection.setRequestProperty("Connection", "close");
 		connection.setInstanceFollowRedirects(true); // it is already the default
-		log.info("Before get InputStream");
+		
 		InputStream in = connection.getInputStream();
 		contentType = connection.getContentType();
 		statusCode  = connection.getResponseCode();
 		StringBuilder contentBuilder = new StringBuilder();
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(in));;
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 	    String currentLine = null;
 	    while ((currentLine = reader.readLine()) != null) {
 	    	contentBuilder.append(currentLine);
@@ -69,7 +70,7 @@ public class ObjectRetrievalService {
 	    }
 		timestamp = new Date();
 		content = contentBuilder.toString();
-		
+		log.info("ready to create new Instance");
 		return new WebObjectInstance(uri, content, contentType, 
 				timestamp, statusCode);
 	}

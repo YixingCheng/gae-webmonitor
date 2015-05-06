@@ -2,6 +2,7 @@ package io.github.lorenzosaino.webmonitor.services;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,6 +11,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.mortbay.log.Log;
+
 /**
  * User notification service
  */
@@ -17,6 +20,9 @@ public class NotificationService {
 
 	private String senderName = null;
 	private String senderEmail = null;
+	
+	private static final Logger log = 
+			Logger.getLogger(NotificationService.class.getName());
 	
 	/**
 	 * Constructor
@@ -44,6 +50,8 @@ public class NotificationService {
 
         try {
             Message msg = new MimeMessage(session);
+            log.info("sender email is: " + this.senderEmail);
+            log.info("sender name is: " + this.senderName);
             msg.setFrom(new InternetAddress(this.senderEmail, this.senderName));
             msg.addRecipient(Message.RecipientType.TO,
                              new InternetAddress(email));
@@ -53,6 +61,14 @@ public class NotificationService {
         } catch (MessagingException|UnsupportedEncodingException e) {
         	throw new IllegalArgumentException(e.getMessage());
         } 
+	}
+
+	public String getSenderName() {
+		return this.senderName;
+	}
+
+	public String getSenderEmail() {
+		return this.senderEmail;
 	}
 	
 }
