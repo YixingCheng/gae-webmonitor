@@ -52,15 +52,15 @@ public class WebMonitorServlet extends HttpServlet {
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		datastore.addObject("http://dealsea.com/");
-		datastore.addObject("http://www.dealmoon.com/");
+		datastore.addObject("http://dealsea.com/coupons/");
+		datastore.addObject("http://dealsea.com/view/bsd.dell.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/");
-		datastore.addSubscription("waldenlaker1@hotmail.com", "http://www.dealmoon.com/");
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/coupons/");
+		datastore.addSubscription("waldenlaker1@hotmail.com", "http://dealsea.com/view/bsd.dell.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
@@ -124,6 +124,7 @@ public class WebMonitorServlet extends HttpServlet {
 			if(areObjectsEqual) {
 				datastore.updateObjectInstanceTimestamp(oldInstance.getUri(), 
 						oldInstance.getTimestamp(), newInstance.getTimestamp());
+				log.info("There is no change on " + oldInstance.getUri() + "!");
 				continue;
 			}
 			datastore.addObjectInstance(newInstance);
