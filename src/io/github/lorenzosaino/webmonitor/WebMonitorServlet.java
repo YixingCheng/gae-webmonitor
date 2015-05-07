@@ -6,6 +6,8 @@ import io.github.lorenzosaino.webmonitor.services.NotificationService;
 import io.github.lorenzosaino.webmonitor.services.ObjectRetrievalService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -60,6 +62,7 @@ public class WebMonitorServlet extends HttpServlet {
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
+		
 		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/lenovo.com");
 		datastore.addSubscription("r3000.mitbbs@gmail.com", "http://dealsea.com/view/bsd.dell.com");
 		try {
@@ -126,11 +129,13 @@ public class WebMonitorServlet extends HttpServlet {
 				log.info("There is no change on " + oldInstance.getUri() + "!");
 				continue;
 			}
+			
+			List<String> updates = getDifference(newInstance.getContent(), oldInstance.getContent());
 			datastore.addObjectInstance(newInstance);
 			subscriberList = datastore.getSubscribers(uri);
 			for (String email: subscriberList) {
 				try {
-					notifier.notifyUser(email, uri);
+					notifier.notifyUser(email, uri, updates);
 				} catch (IllegalArgumentException e) {
 					log.warning("Could not notify user " + email + " about " +
 							"changes to " + uri + ". Error: " + e.getMessage());
@@ -159,8 +164,8 @@ public class WebMonitorServlet extends HttpServlet {
 		int aStatusCode = a.getStatusCode();
 		int bStatusCode = b.getStatusCode();
 		
-		String aContent = a.getContent();
-		String bContent = b.getContent();
+		ArrayList<String> aContent = (ArrayList<String>) a.getContent();
+		ArrayList<String> bContent = (ArrayList<String>) b.getContent();
 		
 		if(aStatusCode != bStatusCode) {
 			return false;
@@ -175,7 +180,40 @@ public class WebMonitorServlet extends HttpServlet {
 		if(aContent != null && bContent == null) {
 			return false;
 		}
-		return aContent.equals(bContent);
+		return equalLists(aContent, bContent);
+	}
+	
+	//auxiliary function to compare two List of strings 
+	private static boolean equalLists(List<String> one, List<String> two){     
+	    if (one == null && two == null){
+	        return true;
+	    }
+
+	    if((one == null && two != null) 
+	      || one != null && two == null
+	      || one.size() != two.size()){
+	        return false;
+	    }
+
+	    //to avoid messing the order of the lists we will use a copy
+	    //as noted in comments by A. R. S.
+	    one = new ArrayList<String>(one); 
+	    two = new ArrayList<String>(two);   
+
+	    Collections.sort(one);
+	    Collections.sort(two);      
+	    return one.equals(two);
+	}
+	
+	private static List<String> getDifference(List<String> newObj, List<String> oldObj){
+		List<String> diff = new ArrayList<String>();
+		for(String deal: newObj){
+			if(oldObj.contains(deal)){
+				diff.add(deal);
+			}
+		}
+		
+		return diff;
 	}
 	
 }

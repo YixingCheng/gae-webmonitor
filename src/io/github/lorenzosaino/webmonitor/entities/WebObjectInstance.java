@@ -1,6 +1,7 @@
 package io.github.lorenzosaino.webmonitor.entities;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class representing an instance of a Web object
@@ -8,7 +9,8 @@ import java.util.Date;
 public class WebObjectInstance {
 
 	private String uri = null;
-	private String content = null;
+	private List<String> content = null;
+	//private String content = null;
 	private String contentType = null;
 	private Date timestamp = null;
 	private int statusCode = 0;
@@ -20,7 +22,7 @@ public class WebObjectInstance {
 	 * @param contentType The MIME type of the object
 	 * @param date The date the content was retrieved
 	 */
-	public WebObjectInstance(String uri, String content, String contentType,
+	public WebObjectInstance(String uri, List<String> content, String contentType,
 			Date timestamp, int statusCode) {
 		
 		if(uri == null || content == null || timestamp == null) {
@@ -58,7 +60,7 @@ public class WebObjectInstance {
 	 * 
 	 * @return the content
 	 */
-	public String getContent() {
+	public List<String> getContent() {
 		return content;
 	}
 	
@@ -67,7 +69,7 @@ public class WebObjectInstance {
 	 * 
 	 * @param content the content to set
 	 */
-	public void setContent(String content) {
+	public void setContent(List<String> content) {
 		this.content = content;
 	}
 	

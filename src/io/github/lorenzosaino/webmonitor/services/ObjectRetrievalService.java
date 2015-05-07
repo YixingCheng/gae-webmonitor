@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -45,7 +46,8 @@ public class ObjectRetrievalService {
 	 */
 	public WebObjectInstance retrieveObject(String uri) throws IOException {		
 		
-		String content = null;
+		String html = null;
+		List<String> content = new ArrayList<String>();
 		String contentType = null;
 		int statusCode = 0;
 		Date timestamp = null;
@@ -73,13 +75,14 @@ public class ObjectRetrievalService {
 	    	connection.disconnect();
 	    }
 		timestamp = new Date();
-		content = contentBuilder.toString();
+		html = contentBuilder.toString();
 		log.info("ready to create new Instance");
-        Document html = Jsoup.parse(content);
-        List<Element> couponElements = html.body().select("div.coupon > h3 > a");
+        Document htmldom = Jsoup.parse(html);
+        List<Element> couponElements = htmldom.body().select("div.coupon > h3 > a");
         for(Element link: couponElements){
-        	log.info(link.text());
+        	content.add(link.text());
         }
+        log.info(content.toString());
 		return new WebObjectInstance(uri, content, contentType, 
 				timestamp, statusCode);
 	}
