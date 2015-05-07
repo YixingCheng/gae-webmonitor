@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
@@ -74,7 +75,11 @@ public class ObjectRetrievalService {
 		timestamp = new Date();
 		content = contentBuilder.toString();
 		log.info("ready to create new Instance");
-		log.info(content);
+        Document html = Jsoup.parse(content);
+        List<Element> couponElements = html.body().select("div.coupon > h3 > a");
+        for(Element link: couponElements){
+        	log.info(link.text());
+        }
 		return new WebObjectInstance(uri, content, contentType, 
 				timestamp, statusCode);
 	}
