@@ -139,8 +139,7 @@ public class DataStoreService {
 		}
 		Entity webObjectInstance = new Entity(OBJECT_INSTANCE);
 		webObjectInstance.setProperty("uri", instance.getUri());
-		webObjectInstance.setProperty("content",
-				new Text(instance.getContent()));
+		webObjectInstance.setProperty("content", instance.getContent());
 		webObjectInstance.setProperty("contentType", instance.getContentType());
 		webObjectInstance.setProperty("timestamp", instance.getTimestamp());
 		webObjectInstance.setProperty("statusCode", instance.getStatusCode());
@@ -187,7 +186,9 @@ public class DataStoreService {
 				.asList(FetchOptions.Builder.withDefaults());
 		List<WebObjectInstance> instanceList = new ArrayList<WebObjectInstance>();
 		for (Entity e : instances) {
-			String content = ((Text) e.getProperty("content")).getValue();
+			//String content = ((Text) e.getProperty("content")).getValue();
+			@SuppressWarnings("unchecked")
+			List<String> content = (List<String>) e.getProperty("content");
 			String contentType = (String) e.getProperty("contentType");
 			int statusCode = ((Integer) e.getProperty("statusCode")).intValue();
 			Date timestamp = (Date) e.getProperty("timestamp");
@@ -214,8 +215,9 @@ public class DataStoreService {
 			return null;
 		}
 		Entity mostRecentInstance = instances.get(0);
-		String content = ((Text) mostRecentInstance.getProperty("content"))
-				.getValue();
+		//String content = ((Text) mostRecentInstance.getProperty("content")).getValue();
+		@SuppressWarnings("unchecked")
+		List<String> content = (List<String>) mostRecentInstance.getProperty("content");
 		String contentType = (String) mostRecentInstance
 				.getProperty("contentType");
 		Date timestamp = (Date) mostRecentInstance.getProperty("timestamp");

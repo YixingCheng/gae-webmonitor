@@ -1,6 +1,5 @@
 package io.github.lorenzosaino.webmonitor.services;
 
-import io.github.lorenzosaino.webmonitor.WebMonitorServlet;
 import io.github.lorenzosaino.webmonitor.entities.WebObjectInstance;
 
 import java.io.BufferedReader;
@@ -9,8 +8,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * Object retrieval service
@@ -41,10 +46,12 @@ public class ObjectRetrievalService {
 	 */
 	public WebObjectInstance retrieveObject(String uri) throws IOException {		
 		
-		String content = null;
+		String html = null;
+		List<String> content = new ArrayList<String>();
 		String contentType = null;
 		int statusCode = 0;
 		Date timestamp = null;
+		
 		
 		
 		HttpURLConnection connection = 
@@ -68,9 +75,17 @@ public class ObjectRetrievalService {
 	    if (connection != null) {
 	    	connection.disconnect();
 	    }
+	    
 		timestamp = new Date();
-		content = contentBuilder.toString();
+		html = contentBuilder.toString();
 		log.info("ready to create new Instance");
+        Document htmldom = Jsoup.parse(html);
+        List<Element> couponElements = htmldom.body().select("div.coupon > h3 > a");
+        for(Element link: couponElements){
+        	content.add(link.text());
+        }
+        log.info(content.toString());
+
 		return new WebObjectInstance(uri, content, contentType, 
 				timestamp, statusCode);
 	}

@@ -1,6 +1,7 @@
 package io.github.lorenzosaino.webmonitor.services;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -41,13 +42,20 @@ public class NotificationService {
 	 * @param email User email address
 	 * @param uri URI of the page that changed
 	 */
-	public void notifyUser(String email, String uri) {
+	public void notifyUser(String email, String uri, List<String> update) {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         session.setDebug(true);
         
-        String msgBody = "The webpage " + uri + " has changed";
-
+        String msgBody = "The webpage " + uri + " has changed\n";
+        msgBody = msgBody + update.size() + "coupon(s) have been added!\n";
+        msgBody += "They are: \n";
+        for(String coupon: update){
+        	msgBody = msgBody + "   " + coupon + "\n"; 
+        }
+        
+        log.info(msgBody);
+        
         try {
             Message msg = new MimeMessage(session);
             log.info("sender email is: " + this.senderEmail);
