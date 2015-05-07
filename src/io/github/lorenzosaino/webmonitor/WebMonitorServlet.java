@@ -63,12 +63,6 @@ public class WebMonitorServlet extends HttpServlet {
 		    Thread.currentThread().interrupt();
 		}
 
-		try {
-		    Thread.sleep(1000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
-
 		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/lenovo.com");
 		datastore.addSubscription("r3000.mitbbs@gmail.com", "http://dealsea.com/view/bsd.dell.com");
 		try {
