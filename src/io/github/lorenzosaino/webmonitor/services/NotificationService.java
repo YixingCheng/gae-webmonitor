@@ -47,8 +47,8 @@ public class NotificationService {
         Session session = Session.getDefaultInstance(props, null);
         session.setDebug(true);
         
-        String msgBody = "The webpage " + uri + " has changed\n";
-        msgBody = msgBody + update.size() + "coupon(s) have been added!\n";
+        String msgBody = "The webpage " + uri + " has changed!\n";
+        msgBody = msgBody + update.size() + " coupon(s) have been added!\n";
         msgBody += "They are: \n";
         for(String coupon: update){
         	msgBody = msgBody + "   " + coupon + "\n"; 

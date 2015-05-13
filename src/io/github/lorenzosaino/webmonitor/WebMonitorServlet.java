@@ -208,7 +208,7 @@ public class WebMonitorServlet extends HttpServlet {
 	private static List<String> getDifference(List<String> newObj, List<String> oldObj){
 		List<String> diff = new ArrayList<String>();
 		for(String deal: newObj){
-			if(oldObj.contains(deal)){
+			if(!oldObj.contains(deal)){
 				diff.add(deal);
 			}
 		}
