@@ -46,6 +46,7 @@ public class WebMonitorServlet extends HttpServlet {
 		this.notifier = new NotificationService(senderName, senderEmail);
 		this.retriever = new ObjectRetrievalService(userAgent);
 		
+		
 		datastore.addUser("waldenlaker@hotmail.com");
 		datastore.addUser("r3000.mitbbs@gmail.com");
 		try {
@@ -54,7 +55,6 @@ public class WebMonitorServlet extends HttpServlet {
 		    Thread.currentThread().interrupt();
 		}
     
-		datastore.addObject("http://dealsea.com/view/lenovo.com");
 		datastore.addObject("http://dealsea.com/view/bsd.dell.com");
 		
 		try {
@@ -63,7 +63,7 @@ public class WebMonitorServlet extends HttpServlet {
 		    Thread.currentThread().interrupt();
 		}
 
-		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/lenovo.com");
+		datastore.addSubscription("waldenlaker@hotmail.com", "http://dealsea.com/view/bsd.dell.com");
 		datastore.addSubscription("r3000.mitbbs@gmail.com", "http://dealsea.com/view/bsd.dell.com");
 		try {
 		    Thread.sleep(1000);                 //1000 milliseconds is one second.

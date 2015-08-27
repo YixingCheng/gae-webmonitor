@@ -53,7 +53,6 @@ public class ObjectRetrievalService {
 		Date timestamp = null;
 		
 		
-		
 		HttpURLConnection connection = 
 				(HttpURLConnection) new URL(uri).openConnection();
 		connection.setRequestProperty("User-Agent", this.userAgent);

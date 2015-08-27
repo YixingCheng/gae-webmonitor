@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -275,7 +276,8 @@ public class DataStoreService {
 			throw new IllegalArgumentException("The user is not registered");
 		}
 		if (isUserSubscribed(email, uri)) {
-			throw new IllegalArgumentException("The user is already subscribed");
+			//throw new IllegalArgumentException("The user is already subscribed");
+			return;
 		}
 		Entity webObjectSubscription = new Entity(SUBSCRIPTION);
 		webObjectSubscription.setProperty("uri", uri);
@@ -314,9 +316,9 @@ public class DataStoreService {
 	public boolean isUserSubscribed(String email, String uri) {
 		Filter uriFilter = new FilterPredicate("uri", FilterOperator.EQUAL, uri);
 		Filter emailFilter = new FilterPredicate("email", FilterOperator.EQUAL, email);
+		Filter comFilter = CompositeFilterOperator.and(uriFilter, emailFilter);
 		Query query = new Query(SUBSCRIPTION)
-				.setFilter(emailFilter)
-				.setFilter(uriFilter);
+				.setFilter(comFilter);
 		Entity subscription = datastoreService.prepare(query).asSingleEntity();
 		return (subscription != null);
 
@@ -343,7 +345,8 @@ public class DataStoreService {
 	 */
 	public void addUser(String email) {
 		if (isUserRegistered(email)) {
-			throw new IllegalArgumentException("User already registered");
+			//throw new IllegalArgumentException("User already registered");
+			return;
 		}
 		Entity user = new Entity(USER);
 		user.setProperty("email", email);
